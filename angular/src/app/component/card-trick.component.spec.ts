@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { AppComponent } from './card-trick.component';
 
-describe('AppComponent', () => {
+describe('21CardTrickComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [

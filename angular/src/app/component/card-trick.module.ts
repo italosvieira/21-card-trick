@@ -1,16 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { CardTrickComponent } from './card-trick.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    CardTrickComponent
   ],
   imports: [
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [CardTrickComponent]
 })
-export class AppModule { }
+export class CardTrickModule {}
