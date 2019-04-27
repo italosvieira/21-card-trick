@@ -1,23 +1,38 @@
-<header>
-  <button id="startGame" type="button" class="button" [disabled]="disableButton" [style.background-color]="getButtonColor()" (click)="startGame()">{{getButtonText()}}</button>
-</header>
+<div class="button-container">
+  <button type="button" class="button" [disabled]="disableButton" [style.background-color]="getButtonColor()" (click)="startGame()">{{getButtonText()}}</button>
+</div>
 
-<section id="game" *ngIf="isGameStarted" class="flex-container">
-  <div id="firstRow" class="row">
-    <div *ngFor="let card of firstRow" class="column" (click)="selectRow(1)">
-      <img src="{{card.image}}">
+<div *ngIf="isGameStarted && gameState > 0" class="flex-container-1 margin-top-5-percent">
+  <div class="flex-container-2">
+    <div class="flex-container-3" (click)="selectRow(1)">
+      <div *ngFor="let card of firstRow">
+        <img src="{{card.image}}" class="card">
+      </div>
     </div>
   </div>
 
-  <div id="secondRow" class="row">
-    <div *ngFor="let card of secondRow" class="column" (click)="selectRow(2)">
-      <img src="{{card.image}}">
+  <div class="flex-container-2">
+    <div class="flex-container-3" (click)="selectRow(2)">
+      <div *ngFor="let card of secondRow">
+        <img src="{{card.image}}" class="card">
+      </div>
     </div>
   </div>
 
-  <div id="thirdRow" class="row">
-    <div *ngFor="let card of thirdRow" class="column" (click)="selectRow(3)">
-      <img src="{{card.image}}">
+  <div class="flex-container-2">
+    <div class="flex-container-3" (click)="selectRow(3)">
+      <div *ngFor="let card of thirdRow">
+        <img src="{{card.image}}" class="card">
+      </div>
     </div>
   </div>
-</section>
+</div>
+
+<div id="gameResult" *ngIf="isGameStarted && gameState === 0">
+  <div class="margin-top-5-percent">
+    <div class="result-item">Is this your card?</div>
+    <div class="result-item">
+      <img src="{{secondRow[3].image}}">
+    </div>
+  </div>
+</div>
