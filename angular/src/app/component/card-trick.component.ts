@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {CardTrickService} from '../service/card-trick.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-root',
   templateUrl: './card-trick.component.html',
   styleUrls: ['./card-trick.component.scss']
 })
-export class CardTrickComponent implements OnInit {
+export class CardTrickComponent {
   constructor(private cardTrickService: CardTrickService) {}
 
   deck: Deck;
@@ -15,30 +16,56 @@ export class CardTrickComponent implements OnInit {
   thirdRow: Array<Card>;
   errorFetchingDeck = false;
   isGameStarted = false;
+  gameState = 3;
+  disableButton = false;
 
-  async ngOnInit() {
-    try {
-      this.deck = await this.cardTrickService.getDeck();
-    } catch (e) {
-      this.errorFetchingDeck = true;
+  getButtonColor(): string {
+    if (this.errorFetchingDeck) {
+      return '';
+    } else {
+      return '#4e9af1';
     }
   }
 
-  startGame(): void {
-    if (!this.isGameStarted && !this.errorFetchingDeck) {
+  getButtonText(): string {
+    if (this.errorFetchingDeck) {
+      return 'Try Again';
+    }
+
+    if (this.isGameStarted) {
+      return 'Restart Game';
+    } else {
+      return 'Start Game';
+    }
+  }
+
+  async startGame() {
+    this.disableButton = true;
+    this.gameState = 3;
+    this.clearRows();
+
+    if (isNullOrUndefined(this.deck)) {
+      try {
+        this.deck = await this.cardTrickService.getDeck();
+        this.errorFetchingDeck = false;
+      } catch (e) {
+        this.errorFetchingDeck = true;
+      }
+    }
+
+    if (!this.errorFetchingDeck) {
       this.isGameStarted = true;
       this.firstRow = this.deck.cards.slice(0, 7);
       this.secondRow = this.deck.cards.slice(7, 14);
       this.thirdRow = this.deck.cards.slice(14, 21);
     }
-  }
 
-  restartGame(): void {
-    this.isGameStarted = false;
-    this.clearRows();
+    this.disableButton = false;
   }
 
   selectRow(row: number): void {
+    this.gameState--;
+
     if (row === 1) {
       this.shuffleCards(this.secondRow.concat(this.firstRow).concat(this.thirdRow));
     } else if (row === 2) {
@@ -48,7 +75,7 @@ export class CardTrickComponent implements OnInit {
     }
   }
 
-  shuffleCards(cards: Array<Card>): void {
+  private shuffleCards(cards: Array<Card>): void {
     let count = 1;
     this.clearRows();
 
@@ -66,7 +93,7 @@ export class CardTrickComponent implements OnInit {
     });
   }
 
-  clearRows(): void {
+  private clearRows(): void {
     this.firstRow = new Array<Card>();
     this.secondRow = new Array<Card>();
     this.thirdRow = new Array<Card>();
