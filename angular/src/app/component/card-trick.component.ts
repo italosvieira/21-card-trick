@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {CardTrickService} from '../service/card-trick.service';
 import {isNullOrUndefined} from 'util';
+import {Card} from '../model/card';
+import {Deck} from '../model/deck';
 
 @Component({
   selector: 'app-root',

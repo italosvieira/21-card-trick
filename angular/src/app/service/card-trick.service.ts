@@ -1,5 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {Deck} from '../model/deck';
+import {Shuffle} from '../model/shuffle';
 
 @Injectable({
   providedIn: 'root',
