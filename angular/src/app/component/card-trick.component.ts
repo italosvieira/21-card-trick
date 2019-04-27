@@ -18,8 +18,8 @@ export class CardTrickComponent {
   thirdRow: Array<Card>;
   errorFetchingDeck = false;
   isGameStarted = false;
-  gameState = 3;
   disableButton = false;
+  gameState = 3;
 
   getButtonColor(): string {
     if (this.errorFetchingDeck) {
