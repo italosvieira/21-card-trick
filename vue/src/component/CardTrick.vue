@@ -58,7 +58,7 @@ export default class CardTrick extends Vue {
   private disableButton = false;
   private gameState = 3;
 
-  private async getDeck() {
+  private async getDeck(): Promise<Deck> {
     let shuffle: Shuffle;
 
     try {
