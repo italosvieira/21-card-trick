@@ -1,7 +1,15 @@
 <template>
   <div>
+    <div class="overlay" v-bind:style="[displayOverlay ? {'display': 'block'} : {'display': 'none'}]" v-on:click="startGame()">
+      <h1>Welcome To 21 Card Trick</h1>
+      <p>Pick a card on your head from the cards on the piles, after that choose the pile that contains your card three times and I'll tell whats your card.</p>
+      <br>
+      <br>
+      <p style="font-style: italic;">Click anywhere on the screen to start.</p>
+    </div>
+
     <div class="button-container">
-      <button type="button" class="button" v-bind:disabled="disableButton" v-bind:style="[errorFetchingDeck ? {'backgroundColor' : ''} : {'backgroundColor': '#4e9af1'}]" v-on:click="startGame()">{{getButtonText()}}</button>
+      <button type="button" class="button" v-if="!displayOverlay" v-bind:disabled="disableButton" v-bind:style="[errorFetchingDeck ? {'backgroundColor' : ''} : {'backgroundColor': '#4e9af1'}]" v-on:click="startGame()">Restart Game</button>
     </div>
 
     <div v-if="isGameStarted && gameState > 0" class="flex-container-1 margin-top-5-percent">
@@ -57,8 +65,24 @@ export default class CardTrick extends Vue {
   private isGameStarted = false;
   private disableButton = false;
   private gameState = 3;
+  private displayOverlay = true;
 
-  private async getDeck(): Promise<Deck> {
+  protected async beforeMount() {
+    await this.getDeck();
+  }
+
+  private async getDeck() {
+    if (this.deck === null || this.deck === undefined) {
+      try {
+        this.deck = await this.getDeckFromAPI();
+        this.errorFetchingDeck = false;
+      } catch (e) {
+        this.errorFetchingDeck = true;
+      }
+    }
+  }
+
+  private async getDeckFromAPI(): Promise<Deck> {
     let shuffle: Shuffle;
 
     try {
@@ -81,28 +105,18 @@ export default class CardTrick extends Vue {
   private getButtonText(): string {
     if (this.errorFetchingDeck) {
       return 'Try Again';
-    }
-
-    if (this.isGameStarted) {
-      return 'Restart Game';
     } else {
-      return 'Start Game';
+      return 'Restart Game';
     }
   }
 
   private async startGame() {
     this.disableButton = true;
+    this.displayOverlay = false;
     this.gameState = 3;
     this.clearRows();
 
-    if (this.deck === null || this.deck === undefined) {
-      try {
-        this.deck = await this.getDeck();
-        this.errorFetchingDeck = false;
-      } catch (e) {
-        this.errorFetchingDeck = true;
-      }
-    }
+    await this.getDeck();
 
     if (!this.errorFetchingDeck) {
       this.isGameStarted = true;
@@ -153,6 +167,22 @@ export default class CardTrick extends Vue {
 </script>
 
 <style scoped>
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+}
+
 .button-container {
   display: flex;
   justify-content: center;
@@ -203,7 +233,7 @@ export default class CardTrick extends Vue {
   color: #FFFFFF;
 }
 
-@media only screen and (max-width: 982px) {
+@media only screen and (max-width: 720px) {
   .flex-container-1 {
     display: flex;
     justify-content: space-evenly;
