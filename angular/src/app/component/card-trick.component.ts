@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CardTrickService} from '../service/card-trick.service';
 import {isNullOrUndefined} from 'util';
 import {Card} from '../model/card';
@@ -9,7 +9,7 @@ import {Deck} from '../model/deck';
   templateUrl: './card-trick.component.html',
   styleUrls: ['./card-trick.component.scss']
 })
-export class CardTrickComponent {
+export class CardTrickComponent implements OnInit {
   constructor(private cardTrickService: CardTrickService) {}
 
   deck: Deck;
@@ -20,6 +20,22 @@ export class CardTrickComponent {
   isGameStarted = false;
   disableButton = false;
   gameState = 3;
+  displayOverlay = true;
+
+  ngOnInit(): void {
+    this.getDeckFromAPI();
+  }
+
+  async getDeckFromAPI() {
+    if (isNullOrUndefined(this.deck)) {
+      try {
+        this.deck = await this.cardTrickService.getDeck();
+        this.errorFetchingDeck = false;
+      } catch (e) {
+        this.errorFetchingDeck = true;
+      }
+    }
+  }
 
   getButtonColor(): string {
     if (this.errorFetchingDeck) {
@@ -29,31 +45,29 @@ export class CardTrickComponent {
     }
   }
 
-  getButtonText(): string {
+  private getButtonText(): string {
     if (this.errorFetchingDeck) {
       return 'Try Again';
-    }
-
-    if (this.isGameStarted) {
-      return 'Restart Game';
     } else {
-      return 'Start Game';
+      return 'Restart Game';
+    }
+  }
+
+  isDisplayOverlay() {
+    if (this.displayOverlay) {
+      return 'block';
+    } else {
+      return 'none';
     }
   }
 
   async startGame() {
     this.disableButton = true;
+    this.displayOverlay = false;
     this.gameState = 3;
     this.clearRows();
 
-    if (isNullOrUndefined(this.deck)) {
-      try {
-        this.deck = await this.cardTrickService.getDeck();
-        this.errorFetchingDeck = false;
-      } catch (e) {
-        this.errorFetchingDeck = true;
-      }
-    }
+    await this.getDeckFromAPI();
 
     if (!this.errorFetchingDeck) {
       this.isGameStarted = true;

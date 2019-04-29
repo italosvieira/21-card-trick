@@ -1,5 +1,13 @@
+<div class="overlay" [style.display]="isDisplayOverlay()" (click)="startGame()">
+  <h1>Welcome To 21 Card Trick</h1>
+  <p>Pick a card on your head from the cards on the piles, after that choose the pile that contains your card three times and I'll tell whats your card.</p>
+  <br>
+  <br>
+  <p style="font-style: italic;">Click anywhere on the screen to start.</p>
+</div>
+
 <div class="button-container">
-  <button type="button" class="button" [disabled]="disableButton" [style.background-color]="getButtonColor()" (click)="startGame()">{{getButtonText()}}</button>
+  <button type="button" class="button" [hidden]="displayOverlay" [disabled]="disableButton" [style.background-color]="getButtonColor()" (click)="startGame()">{{getButtonText()}}</button>
 </div>
 
 <div *ngIf="isGameStarted && gameState > 0" class="flex-container-1 margin-top-5-percent">
