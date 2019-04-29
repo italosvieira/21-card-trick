@@ -1,34 +1,13 @@
-# vue
+# 21 Card Trick Vue
 
-## Project setup
-```
-npm install
-```
+This project was built with [Vue](https://vuejs.org) version 2.6.10 and [TypeScript](https://www.typescriptlang.org) version 3.6.0. 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+This project was generated with [Vue CLI](https://cli.vuejs.org) version 3.7.0.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Installing dependencies
 
-### Run your tests
-```
-npm run test
-```
+Run `npm install` or `npm i` to install all project dependencies.
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Running the project
 
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Run `npm run serve` or `npm start` for a dev server. Navigate to `http://localhost:8080/`. The app will automatically reload if you change any of the source files.
