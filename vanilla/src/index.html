@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>21 Card Trick</title>
+        <meta name="HandheldFriendly" content="True"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="index.js"></script>
+    </head>
+
+    <body>
+        <div>
+            <div id="overlay" class="overlay" onclick="startGame()">
+                <h1>Welcome To 21 Card Trick</h1>
+                <p>Pick a card on your head from the cards on the piles, after that choose the pile that contains your card three times and I'll tell whats your card.</p>
+                <br>
+                <br>
+                <p style="font-style: italic;">Click anywhere on the screen to start.</p>
+            </div>
+
+            <div id="startGameButtonContainer" class="button-container">
+                <button id="startGameButton" type="button" class="button" onclick="startGame()">Restart Game</button>
+            </div>
+
+            <div id="gameMainContent" style="display: none" class="flex-container-1 margin-top-5-percent">
+                <div class="flex-container-2">
+                    <div id="firstRowCards" class="flex-container-3" onclick="selectRow(1)"></div>
+                </div>
+
+                <div class="flex-container-2">
+                    <div id="secondRowCards" class="flex-container-3" onclick="selectRow(2)"></div>
+                </div>
+
+                <div class="flex-container-2">
+                    <div id="thirdRowCards" class="flex-container-3" onclick="selectRow(3)"></div>
+                </div>
+            </div>
+
+            <div id="containerGameResult" class="game-result">
+                <div class="margin-top-5-percent">
+                    <div class="result-item">Is this your card?</div>
+                    <div id="gameResult" class="result-item"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

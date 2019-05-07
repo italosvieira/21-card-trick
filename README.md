@@ -19,6 +19,8 @@ The game works on desktop and mobile.
 
 - Vue: All instructions to build and run the vue implementation are on the [README.md](https://github.com/italosvieira/21-card-trick/blob/master/vue/README.md) of the vue folder.
 
+- Vanilla: All instructions to build and run the vanilla implementation are on the [README.md](https://github.com/italosvieira/21-card-trick/blob/master/vanilla/README.md) of the vanilla folder.
+
 ## Initial Game Screen
 ![a](screenshots/Initial%20Screen.png)
 ## Playing Screen
