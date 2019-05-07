@@ -9,7 +9,7 @@
     </div>
 
     <div class="button-container">
-      <button type="button" class="button" v-if="!displayOverlay" v-bind:disabled="disableButton" v-bind:style="[errorFetchingDeck ? {'backgroundColor' : ''} : {'backgroundColor': '#4e9af1'}]" v-on:click="startGame()">Restart Game</button>
+      <button type="button" class="button" v-if="!displayOverlay" v-bind:disabled="disableButton" v-bind:style="[errorFetchingDeck ? {'backgroundColor' : ''} : {'backgroundColor': '#4e9af1'}]" v-on:click="startGame()">{{getButtonText()}}</button>
     </div>
 
     <div v-if="isGameStarted && gameState > 0" class="flex-container-1 margin-top-5-percent">
